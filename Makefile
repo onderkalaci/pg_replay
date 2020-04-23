@@ -1,8 +1,13 @@
 EXTENSION = pg_replay
 EXTVERSIONS = 1.0
 
+SHLIB_LINK += -lpq
+LIBS += -lpq
 DATA_built = $(foreach v,$(EXTVERSIONS),$(EXTENSION)--$(v).sql)
 DATA = $(wildcard $(EXTENSION)--*--*.sql)
+
+override CPPFLAGS += -I$(libpq_srcdir) -lpq
+override LDFLAGS  += -I$(libpq_srcdir) -lpq
 
 MODULES = pg_replay
 
